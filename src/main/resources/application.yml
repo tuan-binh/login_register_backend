@@ -1,0 +1,24 @@
+spring:
+   application:
+      name: demo_security_reactjs
+   datasource:
+      url: jdbc:mysql://localhost:3306/login_register?createDatabaseIfNotExist=true
+      username: root
+      password: 123456
+   jooq:
+      sql-dialect: org.hibernate.dialect.MySQL8Dialect
+   jpa:
+      hibernate:
+         ddl-auto: update
+         naming:
+            implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      properties:
+         hibernate:
+            format_sql: true
+            show_sql: true
+
+jwt:
+   secret_key: rikkei_academy
+   expired:
+      access: 864000
