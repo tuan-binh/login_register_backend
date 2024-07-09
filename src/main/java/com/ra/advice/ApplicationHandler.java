@@ -35,11 +35,13 @@ public class ApplicationHandler {
 	 * */
 	@ExceptionHandler(CustomException.class)
 	public ResponseEntity<?> handleCustomException(CustomException ex) {
+		Map<String, String> errors = new HashMap<>();
+		errors.put("error",ex.getMessage());
 		return new ResponseEntity<>(
 				  ResponseWrapper.builder()
 							 .status(EHttpStatus.FAILED)
 							 .code(ex.getStatus().value())
-							 .data(ex.getMessage())
+							 .data(errors)
 							 .build(),
 				  ex.getStatus()
 		);

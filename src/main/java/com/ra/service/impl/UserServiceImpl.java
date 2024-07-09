@@ -22,8 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +40,7 @@ public class UserServiceImpl implements IUserService {
 		try {
 			authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 		} catch (AuthenticationException e) {
-			throw new CustomException("Username or password is incorrect", HttpStatus.BAD_REQUEST);
+			throw new CustomException("Mày sai tài khoản mật khẩu rồi", HttpStatus.BAD_REQUEST);
 		}
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		if (!userPrincipal.getStatus()) {
