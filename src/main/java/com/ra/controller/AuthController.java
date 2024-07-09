@@ -1,7 +1,6 @@
 package com.ra.controller;
 
 import com.ra.constants.EHttpStatus;
-import com.ra.dto.ResponseWrapper;
 import com.ra.dto.request.LoginRequest;
 import com.ra.dto.request.RegisterRequest;
 import com.ra.exception.CustomException;
@@ -28,11 +27,7 @@ public class AuthController {
 	 * */
 	@PostMapping("/login")
 	public ResponseEntity<?> handleLogin(@Valid @RequestBody LoginRequest loginRequest) throws CustomException {
-		return ResponseEntity.ok().body(ResponseWrapper.builder()
-				  .status(EHttpStatus.SUCCESS)
-				  .code(200)
-				  .data(userService.login(loginRequest))
-				  .build());
+		return ResponseEntity.ok().body(userService.login(loginRequest));
 	}
 	
 	/**
@@ -42,11 +37,7 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<?> handleRegister(@Valid @RequestBody RegisterRequest registerRequest) throws CustomException {
 		userService.register(registerRequest);
-		return ResponseEntity.created(URI.create("api/v1/auth/register")).body(ResponseWrapper.builder()
-				  .status(EHttpStatus.SUCCESS)
-				  .code(201)
-				  .data("Register successfully")
-				  .build());
+		return ResponseEntity.created(URI.create("api/v1/auth/register")).body("Register successfully");
 	}
 	
 }

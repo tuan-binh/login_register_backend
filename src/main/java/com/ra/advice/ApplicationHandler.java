@@ -1,7 +1,6 @@
 package com.ra.advice;
 
 import com.ra.constants.EHttpStatus;
-import com.ra.dto.ResponseWrapper;
 import com.ra.exception.CustomException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,11 +21,7 @@ public class ApplicationHandler {
 	public ResponseEntity<?> handleValidException(MethodArgumentNotValidException ex) {
 		Map<String, String> errors = new HashMap<>();
 		ex.getFieldErrors().forEach(err -> errors.put(err.getField(), err.getDefaultMessage()));
-		return ResponseEntity.badRequest().body(ResponseWrapper.builder()
-				  .status(EHttpStatus.FAILED)
-				  .code(400)
-				  .data(errors)
-				  .build());
+		return ResponseEntity.badRequest().body(errors);
 	}
 	
 	/**
@@ -37,14 +32,7 @@ public class ApplicationHandler {
 	public ResponseEntity<?> handleCustomException(CustomException ex) {
 		Map<String, String> errors = new HashMap<>();
 		errors.put("error",ex.getMessage());
-		return new ResponseEntity<>(
-				  ResponseWrapper.builder()
-							 .status(EHttpStatus.FAILED)
-							 .code(ex.getStatus().value())
-							 .data(errors)
-							 .build(),
-				  ex.getStatus()
-		);
+		return new ResponseEntity<>(errors, ex.getStatus());
 	}
 	
 }

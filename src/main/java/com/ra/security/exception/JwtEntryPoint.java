@@ -2,7 +2,6 @@ package com.ra.security.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ra.constants.EHttpStatus;
-import com.ra.dto.ResponseWrapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,14 +25,7 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.setStatus(401);
 		Map<String, Object> errors = new HashMap<>();
-		errors.put(
-				  "error",
-				  ResponseWrapper.builder()
-							 .status(EHttpStatus.FAILED)
-							 .code(401)
-							 .data(authException.getMessage())
-							 .build()
-		);
+		errors.put("error",authException.getMessage());
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.writeValue(response.getOutputStream(), errors);
 	}
