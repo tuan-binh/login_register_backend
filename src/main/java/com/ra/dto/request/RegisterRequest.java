@@ -1,5 +1,6 @@
 package com.ra.dto.request;
 
+import com.ra.validation.annotation.EmailExist;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ public class RegisterRequest {
 	@NotBlank(message = "fullName must be not blank")
 	private String fullName;
 	@NotBlank(message = "email must be not blank")
+	@EmailExist
 	private String email;
 	@NotBlank(message = "password must be not blank")
 	private String password;
